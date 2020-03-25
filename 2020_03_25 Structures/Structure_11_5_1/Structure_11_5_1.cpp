@@ -10,10 +10,17 @@ const int LABEL_WIDTH = 15;
 const int FIELD_WIDTH = 10;
 const int DEC_DIGITS = 2;
 
+struct Address
+{
+    int streetNumber;
+    string streetName, cityName, stateName, country, zipCode;
+};
+
 struct PersonInfo // PersonInfo is the name of the structure
 {
     string name;
     int age;
+    Address MailingAddress, BillingAddress;
 };
 
 struct Student  // Student is the name of the structure, also called structure tag
@@ -49,7 +56,7 @@ void outputStudent(Student s)
     cout << right << setw(FIELD_WIDTH) << s.studentID << endl;
     cout << left << setw(LABEL_WIDTH) << "Student Name: ";
     cout << right << setw(FIELD_WIDTH) << s.studentPersonInfo.name << endl;
-    cout << left << setw(LABEL_WIDTH) << "Student Year: ";
+    cout << left << setw(LABEL_WIDTH) << "Student Age: ";
     cout << right << setw(FIELD_WIDTH) << s.studentPersonInfo.age << endl;
     cout << left << setw(LABEL_WIDTH) << "Student Year: ";
     cout << right << setw(FIELD_WIDTH) << s.yearInSchool << endl;

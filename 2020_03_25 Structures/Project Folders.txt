@@ -3,3 +3,4 @@ Structure_11_3_2: demonstrate initialization of structures and accessing members
 Structure_11_4_2: demonstrate array of structures and accessing members
 Structure_11_5_1: demonstrate nested structures and accessing members, and functions
 Structure_11_6_3: demonstrate pointer of structures and accessing members
+Structure_11_7_1: demonstrate array of structures and accessing member with pointer of structures

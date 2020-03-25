@@ -25,7 +25,7 @@ int main(int argc, char** argv) {
     Student student1 = { 1234, "John", 1, 3.75 };
     
     // A student pointer
-    Student * student_ptr1 = &student1;
+    Student * student1_ptr = &student1;
     // can also be done, one field or member at a time
     // use the dot (.) operator to access the individual fields or members
     Student student2;
@@ -35,19 +35,19 @@ int main(int argc, char** argv) {
     student2.studentGPA = 3.85;
     
     // Another student pointer
-    Student * student_ptr2 = &student2;
+    Student * student2_ptr = &student2;
     
     // output student info - in a nice clean formatted manner
-    cout << setprecision(DEC_DIGITS);
+    cout << setprecision(DEC_DIGITS) << fixed;
     
     cout << left << setw(LABEL_WIDTH) << "Student ID: ";
-    cout << right << setw(FIELD_WIDTH) << (*student_ptr1).studentID << endl;    // using indirection operator, note: must be inside ( )
+    cout << right << setw(FIELD_WIDTH) << (*student1_ptr).studentID << endl;    // using indirection operator, note: must be inside ( )
     cout << left << setw(LABEL_WIDTH) << "Student Name: ";
-    cout << right << setw(FIELD_WIDTH) << student_ptr1->studentName << endl;    // using the arrow operator
+    cout << right << setw(FIELD_WIDTH) << student1_ptr->studentName << endl;    // using the arrow operator, does same as (*student1_ptr)
     cout << left << setw(LABEL_WIDTH) << "Student Year: ";
-    cout << right << setw(FIELD_WIDTH) << student_ptr1->yearInSchool << endl;
+    cout << right << setw(FIELD_WIDTH) << student1_ptr->yearInSchool << endl;
     cout << left << setw(LABEL_WIDTH) << "Student GPA: ";
-    cout << right << setw(FIELD_WIDTH) << (*student_ptr1).studentGPA << endl;
+    cout << right << setw(FIELD_WIDTH) << (*student1_ptr).studentGPA << endl;
     
     return 0;
 }

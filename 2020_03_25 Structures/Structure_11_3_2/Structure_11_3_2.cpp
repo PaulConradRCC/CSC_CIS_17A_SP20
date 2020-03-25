@@ -33,7 +33,7 @@ int main(int argc, char** argv) {
     student2.studentGPA = 3.85;
     
     // output student info - in a nice clean formatted manner
-    cout << setprecision(DEC_DIGITS);
+    cout << setprecision(DEC_DIGITS) << fixed;
     
     cout << left << setw(LABEL_WIDTH) << "Student ID: ";
     cout << right << setw(FIELD_WIDTH) << student1.studentID << endl;
