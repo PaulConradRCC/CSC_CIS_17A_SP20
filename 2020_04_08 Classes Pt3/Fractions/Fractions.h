@@ -12,6 +12,7 @@ using namespace std;
 class Fractions {
 private:
     int numerator, denominator;
+    int fraction_state;         // 0=normal fraction, 1=infinity, 2=undefined                  
                                 // some private utility functions for sole use of our Fractions class
     void reduce();              // private member function to reduce our Fraction
     int gcd(int a, int b);      // private member function for computing greatest common divisor
@@ -31,6 +32,9 @@ public:
     int getDenominator() const;
     bool setDenominator(int denom);
     
+    // get member function for fraction_state, no setter since internal class code logic determines the state
+    int getState() const;
+    
     // public utility function for returning a double representing our fraction
     double getValue();  // returns the value representing the fraction, ie. 1/4 would return 0.25
     
@@ -48,6 +52,7 @@ public:
     
     // public overloaded << operator
     friend ostream& operator<<(ostream& o, const Fractions& fract);
+    friend istream& operator>>(istream& i, Fractions& f);
 };
 
 #endif /* FRACTIONS_H */

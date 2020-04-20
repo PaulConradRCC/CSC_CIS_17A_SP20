@@ -4,6 +4,7 @@ Fractions::Fractions() {
     // default Fraction will be 0 or 0/1
     this->numerator=0;
     this->denominator=1;
+    this->fraction_state=0;
 }
 
 Fractions::Fractions(const Fractions &original) {
@@ -11,6 +12,7 @@ Fractions::Fractions(const Fractions &original) {
     // make new objects a copy of an existing object of our class.
     this->setNumerator( original.getNumerator() );
     this->setDenominator( original.getDenominator() );
+    this->fraction_state = original.fraction_state;
 }
 
 Fractions::~Fractions() {
@@ -19,12 +21,16 @@ Fractions::~Fractions() {
 
 void Fractions::reduce()
 {
-    // implement on 4/1/2020
-    int g = gcd ( this->numerator, this->denominator );
-    if ( g != 1 )
+    // updated on 4/8/2020 with handling fraction_state
+    if ( this->fraction_state==0 )
     {
-        this->setNumerator( this->numerator / g );
-        this->setDenominator( this->denominator / g );
+        // implement on 4/1/2020
+        int g = gcd ( this->numerator, this->denominator );
+        if ( g != 1 )
+        {
+            this->setNumerator( this->numerator / g );
+            this->setDenominator( this->denominator / g );
+        }
     }
 }              
     
@@ -57,21 +63,38 @@ bool Fractions::setDenominator(int denom)
 {
     if ( denom==0 )
     {
-        this->denominator=1;
+        this->denominator=0;
+        if ( this->numerator==0 )
+        {
+            // handle 0/0
+            this->fraction_state=2;
+        }
+        else
+        {
+            // handle numerator / 0, "infinity"
+            this->fraction_state=1;
+        }
         return false;
     }
     else
     {
         this->denominator=denom;
+        this->fraction_state=0;
         return true;
     }
+}
+
+int Fractions::getState() const
+{
+    return this->fraction_state;
 }
 
 // remainder will be start of 4/1/2020 meeting
 // public utility function for returning a double representing our fraction
 double Fractions::getValue()
 {
-    return (double)this->numerator / this->denominator;
+    if ( this->fraction_state==0 ) return (double)this->numerator / this->denominator;
+    return 0;
 }
 
 // public member functions for Adding, Subtracting, Multiplying, and Dividing two fractions
@@ -89,6 +112,13 @@ Fractions Fractions::add(Fractions fraction2)
     result.setNumerator( ad + bc );
     result.setDenominator( bd );
     result.reduce();
+
+    if ( bd != 0 ) this->fraction_state=0;
+    else
+    {
+        if ( (ad+bc) == 0 ) this->fraction_state=2;
+        else this->fraction_state=1;
+    }
     
     return result;
 }
@@ -139,15 +169,17 @@ Fractions Fractions::divide(Fractions fraction2)
     
     Fractions result = Fractions();
     
-    if ( bc != 0 )
+    if ( bc == 0 )
     {
-        result.setNumerator( ad );
-        result.setDenominator( bc );
-        result.reduce();
+    //////////////////////////////////////////////////////////////////////////////////////////    
         
         return result;
     }
 
+    result.setNumerator( ad );
+    result.setDenominator( bc );
+    result.reduce();
+        
     return result;
 }
     
@@ -174,4 +206,25 @@ ostream& operator<<(ostream& o, const Fractions & fract)
 {
     o << fract.numerator << " / " << fract.denominator;
     return o;
+}
+
+istream& operator>>(istream& i, Fractions &f)
+{
+    // when using >> with Fractions, it will be expecting two values in the 
+    // order of numerator (followed by whitespace) denominator
+    cout << "Enter numerator: ";
+    i >> f.numerator;
+    
+    cout << "Enter denominator: ";
+    i >> f.denominator;
+    // if our user entered 0 for denominator, we'll set denominator to 1 and setstate = failbit 
+    // (users of this class should check this with a call to the good() function
+    if ( f.denominator==0 )
+    {
+        i.setstate(ios_base::failbit); // set istream state to failbit if 0 denominator
+        f.numerator = 0;
+        f.denominator = 1; // will not allow denominator to be 0, so let's use something like 1        
+    }
+    f.reduce();
+    return i;
 }
