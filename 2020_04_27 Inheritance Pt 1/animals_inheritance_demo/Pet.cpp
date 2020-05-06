@@ -1,5 +1,8 @@
 #include "Pet.h"
 
+#include <iostream>
+using namespace std;
+
 Pet::Pet()
 {
     name = "";
@@ -17,6 +20,7 @@ Pet::Pet(const Pet& orig) {
 }
 
 Pet::~Pet() {
+    cout << "Pet deconstructor called" << endl;
 }
 
 string Pet::getName() const

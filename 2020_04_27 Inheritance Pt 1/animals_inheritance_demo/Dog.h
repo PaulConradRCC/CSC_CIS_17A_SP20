@@ -20,6 +20,7 @@ public:
     bool getParvoShot() const;
     void setParvoShot(bool hasShot);
     
+    void outputDogNameAge();
 private:
     Vaccination rabies; // demonstrate "has a" relationship
     Vaccination parvo;

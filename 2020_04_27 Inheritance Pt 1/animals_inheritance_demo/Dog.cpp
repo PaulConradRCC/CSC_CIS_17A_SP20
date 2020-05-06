@@ -2,6 +2,9 @@
 #include "Pet.h"
 #include "Vaccination.h"
 
+#include <iostream>
+using namespace std;
+
 Dog::Dog(string name, int age, bool hasRabiesShot, bool hasParvoShot) {
     setName(name);
     setAge(age);
@@ -17,6 +20,11 @@ Dog::Dog(const Dog& orig) {
 }
 
 Dog::~Dog() {
+}
+
+void Dog::outputDogNameAge()
+{
+    cout << "Name: "  << getName() << ", Age: " << getAge();
 }
 
 bool Dog::getRabiesShot() const

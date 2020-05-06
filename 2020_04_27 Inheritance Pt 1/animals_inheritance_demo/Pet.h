@@ -10,7 +10,8 @@ public:
     Pet(string n, int a);
     Pet(const Pet& orig);
     virtual ~Pet();
-    
+
+protected:    
     // get / set methods/member functions
     string getName() const;
     bool setName(string newName);
